@@ -51,6 +51,102 @@ offers - Promotion details and metadata
 
 templates - Email template content and variables
 
+# Installation & Setup
+
+## Prerequisites
+- Node.js (v14 or newer)
+- npm or yarn
+- MongoDB (local installation or MongoDB Atlas account)
+
+## Getting Started
+
+### Clone the repository
+```bash
+git clone https://github.com/yourusername/offer-lo.git
+cd offer-lo
+```
+
+### Backend Setup
+1. Navigate to the server directory:
+```bash
+cd server
+```
+
+2. Install dependencies:
+```bash
+npm install
+# or
+yarn install
+```
+
+3. Create a `.env` file with the following variables:
+```
+PORT=5000
+MONGODB_URI=mongodb://localhost:27017/offerlo
+JWT_SECRET=your_jwt_secret_key
+EMAIL_SERVICE=your_email_service
+EMAIL_USER=your_email_username
+EMAIL_PASS=your_email_password
+```
+
+4. Start the backend server:
+```bash
+npm run dev
+# or
+yarn dev
+```
+
+### Frontend Setup
+1. Open a new terminal and navigate to the client directory:
+```bash
+cd client
+```
+
+2. Install dependencies:
+```bash
+npm install
+# or
+yarn install
+```
+
+3. Start the frontend development server:
+```bash
+npm start
+# or
+yarn start
+```
+
+4. The application will be available at `http://localhost:3000`
+
+## Building for Production
+1. Build the frontend:
+```bash
+cd client
+npm run build
+# or
+yarn build
+```
+
+2. Set NODE_ENV to production in your backend `.env` file:
+```
+NODE_ENV=production
+```
+
+3. Start the production server:
+```bash
+cd server
+npm start
+# or
+yarn start
+```
+
+## Docker Setup (Alternative)
+If you prefer using Docker:
+```bash
+# Run the entire application stack
+docker-compose up -d
+```
+
 
 
 
