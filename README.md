@@ -40,16 +40,8 @@ Material-UI for UI components
 ## Backend
 Node.js with Express.js framework
 
-MongoDB with Mongoose ORM (flexible schema for templates)
+Mysql for database
 
-# Database Selection (MongoDB)
-## Chosen for:
-
-Flexible schema (useful for variable template structures)
-
-Easy scalability
-
-JSON-like documents that match well with JavaScript stack
 
 ## Collections:
 
