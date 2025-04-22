@@ -131,7 +131,6 @@ app.post("/api/auth/login", async (req, res) => {
       return res.status(401).json({ message: "Invalid credentials" });
     }
 
-    //In a real app, you'd use bcrypt.compare
     const isPasswordValid = await bcrypt.compare(password, admin.password);
     if (!isPasswordValid) {
       return res.status(401).json({ message: "Invalid credentials" });
@@ -189,7 +188,6 @@ app.get("/api/emails/history", authenticate, async (req, res) => {
   }
 });
 
-// Improved assign/send email endpoint
 app.post("/api/assign", authenticate, async (req, res) => {
   const { template_id, user_ids } = req.body;
 
@@ -197,7 +195,6 @@ app.post("/api/assign", authenticate, async (req, res) => {
     const template = await Template.findByPk(template_id);
     if (!template) return res.status(404).json({ error: "Template not found" });
 
-    // Create email history record
     const emailRecord = await SentEmail.create({
       template_id,
       template_name: template.template_name,
@@ -211,15 +208,12 @@ app.post("/api/assign", authenticate, async (req, res) => {
       failed: [],
     };
 
-    // Helper function to replace template variables
     const personalizeTemplate = (templateText, userData) => {
       let personalized = templateText;
-      // Replace {{name}} or {{user_name}} with the user's name
       personalized = personalized.replace(
         /{{(name|user_name)}}/gi,
         userData.user_name
       );
-      // You can add more replacements here for other user fields
       return personalized;
     };
 
@@ -235,18 +229,15 @@ app.post("/api/assign", authenticate, async (req, res) => {
           continue;
         }
 
-        // Save the template-user association
         await UserTemplate.findOrCreate({
           where: { user_id: uid, template_id },
         });
 
-        // Personalize the email content
         const personalizedBody = personalizeTemplate(
           template.template_body,
           user
         );
 
-        // Send the email with personalized content
         if (transporter) {
           await transporter.sendMail({
             from: process.env.EMAIL_USER || "noreply@emailengine.com",
@@ -272,7 +263,6 @@ app.post("/api/assign", authenticate, async (req, res) => {
       }
     }
 
-    // Update the email record with results
     await emailRecord.update({
       success_count: results.success.length,
       failed_count: results.failed.length,
