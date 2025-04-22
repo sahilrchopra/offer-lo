@@ -1,0 +1,18 @@
+@startuml SequenceDiagram
+actor User
+participant UI as TemplatesTab
+participant API as "api.get('/templates')"
+participant Server
+database DB as SQLite
+
+User ->> UI : mount()
+UI ->> UI : setFetching(true)
+UI ->> API : GET /templates
+API ->> Server : HTTP GET /templates
+Server ->> DB : SELECT * FROM Templates
+DB -->> Server : rows[]
+Server -->> API : 200, JSON(rows)
+API -->> UI : data
+UI ->> UI : setTemplates(data), setFetching(false)
+UI -->> User : render list
+@enduml

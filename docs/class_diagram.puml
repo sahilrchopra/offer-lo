@@ -1,0 +1,61 @@
+@startuml class_diagram
+' Front-end
+class TemplatesTab {
+  +templates : List
+  +selectedTemplate
+  +templateName : string
+  +templateBody : string
+  +loadTemplates()
+  +handleSelectTemplate()
+  +handleSubmit()
+}
+class Login
+class DashboardLayout
+class AssignManager
+class EmailsTab
+class TemplateManager
+class AuthContext {
+  +user
+  +login()
+  +logout()
+}
+
+TemplatesTab ..> AuthContext  : consumes
+TemplatesTab ..> api          : uses
+
+' Shared API client
+class api {
+  +get()
+  +post()
+  +put()
+  +delete()
+}
+
+' Back-end
+class Server {
+  +index.js
+  +config/db.js
+}
+class Template {
+  +template_id
+  +template_name
+  +template_body
+  +createdAt
+  +updatedAt
+}
+class User
+class Admin
+class Offer
+class SentEmail
+class UserTemplate
+
+Server ..> Template
+Server ..> User
+Server ..> SentEmail
+Server ..> Offer
+Server ..> Admin
+Server ..> UserTemplate
+
+api ..> Server : HTTP/JSON
+
+@enduml

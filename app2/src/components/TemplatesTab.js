@@ -82,29 +82,17 @@ const TemplatesTab = () => {
   return (
     <Row className="tab-content-row g-4">
       {" "}
-      {/* Added gutter spacing */}
-      {/* Template List (Left Pane) */}
       <Col md={6} className="d-flex flex-column">
         {" "}
-        {/* Changed from md={5} to md={6} for symmetry */}
         <Card className="shadow-sm h-100">
           {" "}
-          {/* Simplified to h-100 for full height */}
           <Card.Header className="bg-white">
             <div className="d-flex justify-content-between align-items-center">
               <h5 className="mb-0">Template List</h5>
-              <Button
-                variant="outline-primary"
-                size="sm"
-                onClick={handleCreateNew}
-              >
-                <i className="bi bi-plus-lg me-1"></i> New
-              </Button>
             </div>
           </Card.Header>
           <Card.Body className="p-0 overflow-auto">
             {" "}
-            {/* Added overflow-auto for scrolling */}
             {fetching ? (
               <div className="text-center py-4">
                 <Spinner animation="border" variant="primary" />
@@ -143,13 +131,10 @@ const TemplatesTab = () => {
           </Card.Body>
         </Card>
       </Col>
-      {/* Template Editor (Right Pane) */}
       <Col md={6} className="d-flex flex-column">
         {" "}
-        {/* Changed from md={7} to md={6} for symmetry */}
         <Card className="shadow-sm h-100">
           {" "}
-          {/* Simplified to h-100 for full height */}
           <Card.Header className="bg-white">
             <h5 className="mb-0">
               {selectedTemplate ? "Edit Template" : "Create New Template"}

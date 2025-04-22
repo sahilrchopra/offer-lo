@@ -15,7 +15,7 @@ const DashboardLayout = ({ children }) => {
       case "emails":
         return <EmailsTab />;
       default:
-        return <TemplatesTab />; // Default to templates tab
+        return <TemplatesTab />; 
     }
   };
 
@@ -30,7 +30,6 @@ const DashboardLayout = ({ children }) => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-              {/* Dashboard tab removed */}
               <Nav.Link
                 href="#templates"
                 active={activeTab === "templates"}
@@ -59,7 +58,6 @@ const DashboardLayout = ({ children }) => {
       </Navbar>
 
       <Container className="py-4">
-        {/* Header section with titles removed */}
         {renderTabContent()}
       </Container>
 
