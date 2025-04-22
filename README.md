@@ -96,6 +96,11 @@ npm run dev
 yarn dev
 ```
 
+5. (Optional) Clear and reset the database (in server terminal):
+```bash
+node ./scripts/delete_db.js
+```
+
 ### Frontend Setup
 1. Open a new terminal and navigate to the client directory:
 ```bash

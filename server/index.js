@@ -36,12 +36,11 @@ try {
       user: process.env.EMAIL_USER,
       pass: process.env.EMAIL_PASS,
     },
-    // For local development/testing without actually sending emails
-    // Comment this out in production
     tls: { rejectUnauthorized: false },
+    logger: true,
+    debug: true
   });
 
-  // Verify transporter configuration
   transporter.verify(function (error, success) {
     if (error) {
       console.log("SMTP connection error:", error);
@@ -146,7 +145,6 @@ app.post("/api/auth/login", async (req, res) => {
   }
 });
 
-// Protected Routes
 app.get("/api/users", authenticate, async (_, res) => {
   const users = await User.findAll();
   res.json(users);
@@ -174,7 +172,6 @@ app.put("/api/templates/:id", authenticate, async (req, res) => {
   res.json(updated);
 });
 
-// Get sent emails history
 app.get("/api/emails/history", authenticate, async (req, res) => {
   try {
     const emailHistory = await SentEmail.findAll({
@@ -209,15 +206,13 @@ app.post("/api/assign", authenticate, async (req, res) => {
     };
 
     const personalizeTemplate = (templateText, userData) => {
-      let personalized = templateText;
-      personalized = personalized.replace(
+      let personalized = templateText.replace(
         /{{(name|user_name)}}/gi,
         userData.user_name
       );
-      return personalized;
+      return `Hi  ${userData.user_name},\n\n${personalized}`;
     };
 
-    // Process each recipient
     for (const uid of user_ids) {
       try {
         const user = await User.findByPk(uid);
@@ -239,12 +234,13 @@ app.post("/api/assign", authenticate, async (req, res) => {
         );
 
         if (transporter) {
-          await transporter.sendMail({
-            from: process.env.EMAIL_USER || "noreply@emailengine.com",
+          const info = await transporter.sendMail({
+            from: process.env.EMAIL_FROM || process.env.EMAIL_USER,
             to: user.user_email,
             subject: template.template_name,
             text: personalizedBody,
           });
+          console.log(`Email sent from ${info.envelope.from} to ${info.envelope.to}: ${info.messageId}`);
 
           results.success.push({
             user_id: uid,
