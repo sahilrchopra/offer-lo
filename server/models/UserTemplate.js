@@ -1,7 +1,6 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/db");
 
-// Junction table to associate users with templates
 const UserTemplate = sequelize.define(
   "UserTemplate",
   {

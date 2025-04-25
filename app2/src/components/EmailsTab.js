@@ -33,7 +33,6 @@ const EmailsTab = () => {
   const loadData = async () => {
     setFetching(true);
     try {
-      // Fetch users, templates, and email history in parallel
       const [usersRes, templatesRes, emailHistoryRes] = await Promise.all([
         api.get("/users"),
         api.get("/templates"),
@@ -67,10 +66,8 @@ const EmailsTab = () => {
         user_ids: selectedUsers.map((user) => user.value),
       });
 
-      // Store the detailed result for display
       setLastSentResult(response.data);
 
-      // Show success toast with count
       toast.success(
         `Emails sent: ${response.data.success_count} successful, ${response.data.failed_count} failed`
       );
@@ -119,7 +116,6 @@ const EmailsTab = () => {
 
   return (
     <Row>
-      {/* Sent Emails List (Left Pane) */}
       <Col md={5}>
         <Card className="shadow-sm h-100">
           <Card.Header className="bg-white">
@@ -182,7 +178,6 @@ const EmailsTab = () => {
         </Card>
       </Col>
 
-      {/* Send Email Form (Right Pane) */}
       <Col md={7}>
         <Card className="shadow-sm h-100">
           <Card.Header className="bg-white">
