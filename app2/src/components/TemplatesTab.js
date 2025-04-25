@@ -1,13 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  Row,
-  Col,
-  Card,
-  ListGroup,
-  Form,
-  Button,
-  Spinner,
-} from "react-bootstrap";
+import { Row, Col, Card, ListGroup, Form, Button, Spinner, Modal } from "react-bootstrap";
 import api from "../api";
 import { toast } from "react-toastify";
 
@@ -18,6 +10,7 @@ const TemplatesTab = () => {
   const [templateBody, setTemplateBody] = useState("");
   const [loading, setLoading] = useState(false);
   const [fetching, setFetching] = useState(true);
+  const [showPreview, setShowPreview] = useState(false);
 
   useEffect(() => {
     loadTemplates();
@@ -169,25 +162,49 @@ const TemplatesTab = () => {
                 </Form.Text>
               </Form.Group>
 
-              <div className="d-grid">
+              <div className="d-flex gap-2 mb-3">
                 <Button type="submit" variant="primary" disabled={loading}>
                   {loading ? (
                     <Spinner animation="border" size="sm" className="me-2" />
                   ) : selectedTemplate ? (
-                    <>
-                      <i className="bi bi-save me-2"></i> Update Template
-                    </>
+                    <><i className="bi bi-save me-2"></i> Update</>
                   ) : (
-                    <>
-                      <i className="bi bi-plus-circle me-2"></i> Create Template
-                    </>
+                    <><i className="bi bi-plus-circle me-2"></i> Create</>
                   )}
+                </Button>
+                <Button
+                  type="button"
+                  variant="secondary"
+                  onClick={() => setShowPreview(v => !v)}
+                >
+                  <i className="bi bi-eye me-2"></i>
+                  {showPreview ? 'Hide Preview' : 'Show Preview'}
                 </Button>
               </div>
             </Form>
           </Card.Body>
         </Card>
       </Col>
+
+      {/* Preview Modal */}
+      <Modal
+        show={showPreview}
+        onHide={() => setShowPreview(false)}
+        size="lg"
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Template Preview</Modal.Title>
+        </Modal.Header>
+        <Modal.Body style={{ padding: 0, height: '60vh' }}>
+          <iframe
+            title="template-preview"
+            srcDoc={templateBody}
+            sandbox="allow-same-origin"
+            style={{ width: '100%', height: '100%', border: 'none' }}
+          />
+        </Modal.Body>
+      </Modal>
     </Row>
   );
 };

@@ -199,6 +199,22 @@ function TemplateManager() {
               )}
             </div>
           </Form>
+
+          {/* Live preview of template body */}
+          <div className="mt-4">
+            <h6 className="text-uppercase text-muted small fw-bold mb-2">Preview</h6>
+            <div
+              style={{
+                border: '1px solid #ddd',
+                padding: '12px',
+                minHeight: '250px',
+                overflowY: 'auto',
+                backgroundColor: '#fcfcfc',
+              }}
+              // If body contains HTML tags, render as HTML, else as text
+              dangerouslySetInnerHTML={{ __html: body }}
+            />
+          </div>
         </div>
       </Card.Body>
     </Card>
