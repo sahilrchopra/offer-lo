@@ -20,6 +20,7 @@ function sortCategories(inputJson) {
     const result = [];
     for (const root of roots) {
         const stack = [root];
+        console.log("Stack:", stack);
         while (stack.length > 0) {
             const node = stack.pop();
             result.push(node);
@@ -33,9 +34,8 @@ function sortCategories(inputJson) {
     return JSON.stringify(result);
 }
 
-const testCases = [
+const testCase = 
     {
-        name: "Sample Input",
         input: `[
             {
                 "name": "Accessories",
@@ -63,10 +63,7 @@ const testCases = [
                 "parent_id": null
             }
         ]`,
-    }
-];
+    };
 
-testCases.forEach((testCase, index) => {
     const result = sortCategories(testCase.input);
     console.log("Result:", result);
-});
