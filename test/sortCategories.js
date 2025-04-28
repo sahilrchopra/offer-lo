@@ -1,11 +1,9 @@
 function sortCategories(inputJson) {
     const categories = JSON.parse(inputJson);
-    const idMap = new Map();
     const childrenMap = new Map();
     const roots = [];
 
     for (const cat of categories) {
-        idMap.set(cat.id, cat);
         const parentId = cat.parent_id;
         if (parentId === null) {
             roots.push(cat);

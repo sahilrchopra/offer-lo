@@ -1,7 +1,6 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/db");
 
-// Define SentEmail model to track email history
 const SentEmail = sequelize.define(
   "SentEmail",
   {
