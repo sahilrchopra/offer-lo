@@ -46,7 +46,14 @@ async function seed() {
       state: "Delhi",
       gender: "male",
     });
-    for (let i = 2; i <= 100; i++) {
+    users.push({
+      user_name: "Nikunj",
+      user_email: "nikunj11bansal@gmail.com",
+      city: "Gaziabad",
+      state: "Delhi",
+      gender: "male",
+    });
+    for (let i = 3; i <= 100; i++) {
       users.push({
         user_name: `User ${i}`,
         user_email: `user${i}@example.com`,

@@ -25,6 +25,7 @@ const EmailsTab = () => {
   const [loading, setLoading] = useState(false);
   const [fetching, setFetching] = useState(true);
   const [lastSentResult, setLastSentResult] = useState(null);
+  const [scheduledTime, setScheduledTime] = useState("");
 
   useEffect(() => {
     loadData();
@@ -64,20 +65,22 @@ const EmailsTab = () => {
       const response = await api.post("/assign", {
         template_id: selectedTemplate.value,
         user_ids: selectedUsers.map((user) => user.value),
+        scheduled_time: scheduledTime || null,
       });
+
+      if (scheduledTime) {
+        toast.success(`Email is scheduled to send at ${new Date(scheduledTime).toLocaleString()}`);
+      } else {
+        toast.success(`Emails sent: ${response.data.success_count} successful, ${response.data.failed_count} failed`);
+      }
 
       setLastSentResult(response.data);
 
-      toast.success(
-        `Emails sent: ${response.data.success_count} successful, ${response.data.failed_count} failed`
-      );
-
-      // Refresh the email history
       const emailHistoryRes = await api.get("/emails/history");
       setSentEmails(emailHistoryRes.data);
 
-      // Clear selected users after sending
       setSelectedUsers([]);
+      setScheduledTime(""); 
     } catch (error) {
       console.error("Failed to send emails:", error);
       toast.error(
@@ -249,6 +252,19 @@ const EmailsTab = () => {
                 </Form.Text>
               </Form.Group>
 
+              <Form.Group className="mb-4" controlId="scheduleTime">
+                <Form.Label>Schedule Time</Form.Label>
+                <Form.Control
+                  type="datetime-local"
+                  value={scheduledTime}
+                  onChange={(e) => setScheduledTime(e.target.value)}
+                  disabled={loading}
+                />
+                <Form.Text className="text-muted">
+                  Leave empty to send instantly.
+                </Form.Text>
+              </Form.Group>
+
               <div className="d-grid">
                 <Button
                   type="submit"
@@ -259,7 +275,7 @@ const EmailsTab = () => {
                 >
                   {loading ? (
                     <>
-                      <Spinner animation="border" size="sm" className="me-2" />{" "}
+                      <Spinner animation="border" size="sm" className="me-2" /> 
                       Sending...
                     </>
                   ) : (

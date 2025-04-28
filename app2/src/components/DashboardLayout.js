@@ -1,19 +1,19 @@
 import React, { useState } from "react";
-import { Container, Navbar, Nav, Button, Tab } from "react-bootstrap";
+import { Container, Navbar, Nav, Button } from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext";
 import TemplatesTab from "./TemplatesTab";
 import EmailsTab from "./EmailsTab";
 
 const DashboardLayout = ({ children }) => {
   const { logout } = useAuth();
-  const [activeTab, setActiveTab] = useState("templates"); // Changed default to templates
+  const [activeTab, setActiveTab] = useState("templates"); 
 
   const renderTabContent = () => {
     switch (activeTab) {
       case "templates":
         return <TemplatesTab />;
       case "emails":
-        return <EmailsTab />;
+        return <EmailsTab />; 
       default:
         return <TemplatesTab />; 
     }

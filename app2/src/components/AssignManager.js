@@ -19,6 +19,8 @@ function AssignManager() {
   const [loading, setLoading] = useState(false);
   const [fetching, setFetching] = useState(true);
   const [success, setSuccess] = useState(false);
+  // State for scheduled time
+  const [scheduledTime, setScheduledTime] = useState("");
 
   useEffect(() => {
     loadData();
@@ -51,10 +53,16 @@ function AssignManager() {
       await api.post("/assign", {
         template_id: selectedTemplate.value,
         user_ids: selectedUsers.map((u) => u.value),
+        scheduled_time: scheduledTime || null,
       });
-      toast.success("Emails sent successfully");
+      if (scheduledTime) {
+        toast.success(`Email is scheduled to send at ${new Date(scheduledTime).toLocaleString()}`);
+      } else {
+        toast.success("Emails sent successfully");
+      }
       setSuccess(true);
       setSelectedUsers([]);
+      setScheduledTime(""); 
     } catch {
       toast.error("Error sending emails");
     } finally {
@@ -164,6 +172,22 @@ function AssignManager() {
                     </Button>
                   )}
                 </div>
+              </Form.Group>
+            </div>
+
+            <div className="mb-4">
+              <h6 className="text-uppercase text-muted small fw-bold mb-3">Schedule</h6>
+              <Form.Group controlId="scheduleTime">
+                <Form.Label>Schedule Time</Form.Label>
+                <Form.Control
+                  type="datetime-local"
+                  value={scheduledTime}
+                  onChange={(e) => setScheduledTime(e.target.value)}
+                  disabled={loading}
+                />
+                <Form.Text className="text-muted">
+                  Leave empty to send instantly.
+                </Form.Text>
               </Form.Group>
             </div>
 
