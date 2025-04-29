@@ -145,13 +145,6 @@ npm start
 yarn start
 ```
 
-## Docker Setup (Alternative)
-If you prefer using Docker:
-```bash
-# Run the entire application stack
-docker-compose up -d
-```
-
 
 
 
